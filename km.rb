@@ -47,3 +47,52 @@ class Algorithms
     vectors.transpose.map {|x| x.reduce(:+)/vectors.size.to_f}
   end
 end
+
+class Results
+  def self.performance(vectors, results, n_of_clusters)
+    results = json_results(results)
+    
+    # Class names in vectors (or in data) could be different comparing to class
+    # names in results. So we have to try every possible combination of class
+    # names in results. Trying all possible combinations computationally is
+    # probably not the best option but it is good enough for small k.
+    
+    # Permutation that produces best performance will be interpreted
+    # as a performance of a model.
+    
+    perf = []
+    permutations(n_of_clusters).each do |permutation|
+      correct, incorrect = [0, 0]
+      vectors.each do |v|
+        match_result = permute_results(results, permutation)
+          .select { |r| r[:x] == v['x'] && r[:y] == v['y'] }[0]
+        v['class'] == match_result[:class] ? correct += 1 : incorrect += 1
+      end
+      perf << correct.to_f/(correct + incorrect)
+    end
+    perf.max
+  end
+  
+  def self.json_results(results)
+    json_type_results = []
+    results.each_with_index do |result, i|
+      result.each do |r|
+        json_type_results << { 'x': r[0], 'y': r[1], 'class': i+1 }
+      end
+    end
+    json_type_results
+  end
+  
+  def self.permutations(n)
+    array =*(1..n)
+    array.permutation(n).to_a
+  end
+  
+  def self.permute_results(results, permutation)
+    res = []
+    results.each do |r|
+      res << { 'x': r[:x], 'y': r[:y], 'class': permutation[r[:class]-1] }
+    end
+    res
+  end
+end

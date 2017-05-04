@@ -25,11 +25,39 @@ RSpec.describe Algorithms do
         it 'works for multidimensional vectors' do
           expect(Algorithms.euclidean_distance([2,4], [5,8])).to eq(5)
         end
-        
-        it 'vectors_average calculates average for each element' do
-          expect(Algorithms.vectors_average([[1,2,3], [4,5,6]]))
-          .to eq([2.5,3.5,4.5])
-        end
+      end
+      
+      it 'vectors_average calculates average for each element' do
+        expect(Algorithms.vectors_average([[1,2,3], [4,5,6]]))
+        .to eq([2.5,3.5,4.5])
+      end
+    end
+  end
+  
+  describe Results do
+    describe 'performance' do
+      it 'json_results return proper hash' do
+        results = [[[1, 2], [3, 4]],[[5, 6]]]
+        expect(Results.json_results(results))
+          .to eq([{ x: 1, y: 2, class: 1 },
+                  { x: 3, y: 4, class: 1 },
+                  { x: 5, y: 6, class: 2 }])
+      end
+      
+      it 'permutations return all possible permutations' do
+        expect(Results.permutations(3)).to eq(
+          [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]])
+      end
+      
+      it 'permute_results changes class names according to given permutation' do
+        results = [{ x: 1, y: 2, class: 1 },
+                   { x: 3, y: 4, class: 2 },
+                   { x: 5, y: 6, class: 3 }]
+        permutation = [3, 1, 2]
+        expect(Results.permute_results(results, permutation))
+          .to eq([{ x: 1, y: 2, class: 3 },
+                  { x: 3, y: 4, class: 1 },
+                  { x: 5, y: 6, class: 2 }])
       end
     end
   end
