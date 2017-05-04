@@ -42,4 +42,8 @@ class Algorithms
     end
     Math.sqrt( sum_of_squares )
   end
+  
+  def self.vectors_average(vectors)
+    vectors.transpose.map {|x| x.reduce(:+)/vectors.size.to_f}
+  end
 end

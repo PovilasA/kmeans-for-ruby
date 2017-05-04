@@ -21,6 +21,15 @@ RSpec.describe Algorithms do
         it 'works for one dimension vectors (integers)' do
           expect(Algorithms.euclidean_distance(2,5)).to eq(3)
         end
+        
+        it 'works for multidimensional vectors' do
+          expect(Algorithms.euclidean_distance([2,4], [5,8])).to eq(5)
+        end
+        
+        it 'vectors_average calculates average for each element' do
+          expect(Algorithms.vectors_average([[1,2,3], [4,5,6]]))
+          .to eq([2.5,3.5,4.5])
+        end
       end
     end
   end
