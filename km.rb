@@ -32,4 +32,14 @@ class Algorithms
     end
     cc
   end
+  
+  def self.euclidean_distance(p1, p2)
+    p1 = [p1] unless p1.is_a?(Array)
+    p2 = [p2] unless p2.is_a?(Array)
+    sum_of_squares = 0
+    p1.each_with_index do |p1_coord,index| 
+      sum_of_squares += (p1_coord - p2[index]) ** 2 
+    end
+    Math.sqrt( sum_of_squares )
+  end
 end
