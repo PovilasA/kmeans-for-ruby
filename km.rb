@@ -95,4 +95,46 @@ class Results
     end
     res
   end
+  
+  def self.cross_validation(vectors, distance, iterations, size, seed)
+    r = Random.new(seed)
+    all_performances = []
+    number_of_clusters =*(2..5) 
+    
+    # Max number of cluster should be not bigger than: Math.sqrt(vectors.size/2)) 
+    # However because of saving resources and knowing testing data we use k < 6.
+    number_of_clusters.each do |k|
+      performances = []
+      iterations.times do 
+        to_train = (vectors.size*size).to_int.times.map { r.rand(1..vectors.size)  }  
+        training_set = vectors.select.with_index { |v, i| v if to_train.include?(i)  }
+        results1 = Algorithms.kmeans(vectors, k, distance, seed)
+        performances << Results.performance(training_set, results1, k)
+      end
+      all_performances << performances.mean/performances.standard_deviation
+      puts "Cross validation with k = #{k} is finished."
+    end
+    k_best = number_of_clusters[all_performances.rindex(all_performances.max)]
+    k_best
+  end
 end
+
+module Enumerable
+  def sum
+    self.inject(0){|accum, i| accum + i }
+  end
+
+  def mean
+    self.sum/self.length.to_f
+  end
+
+  def sample_variance
+    m = self.mean
+    sum = self.inject(0){|accum, i| accum +(i-m)**2 }
+    sum/(self.length - 1).to_f
+  end
+
+  def standard_deviation
+    Math.sqrt(self.sample_variance)
+  end
+end 
