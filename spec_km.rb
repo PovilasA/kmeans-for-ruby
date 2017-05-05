@@ -27,6 +27,13 @@ RSpec.describe Algorithms do
         .of(0.8)
     end
     
+    # Integration test for task C
+    # Not implemented yet
+    it 'with mahalanobis distance returns correct performance' do
+      vectors = read_vectors_json
+      results = Algorithms.kmeans(vectors, 3, 'mahalanobis', 100)
+    end
+    
     describe 'auxiliary methods' do
       describe 'euclidean_distance' do
         it 'works for one dimension vectors (integers)' do

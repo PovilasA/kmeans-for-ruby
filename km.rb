@@ -43,6 +43,10 @@ class Algorithms
     Math.sqrt( sum_of_squares )
   end
   
+  # To be implemented
+  def self.mahalanobis_distance(p1, p2)
+  end
+  
   def self.vectors_average(vectors)
     vectors.transpose.map {|x| x.reduce(:+)/vectors.size.to_f}
   end
