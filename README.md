@@ -1,4 +1,7 @@
+# **KMeans for Ruby**
 
+This algorithm was made according to a specific task ([part1](https://drive.google.com/file/d/1zkNIWhjg07Q11RW3LQ91KWkCC9Ycs-tw1Q/view?usp=sharing), [part2](https://drive.google.com/file/d/1FI0fdIRihWtoX_3hlEAWtszzix8LJn9_Lw/view?usp=sharing)). 
+However task details is a private information which cannot be published publicy. To get an access please contact me personally.
 
 To run a program you can access online environment using link: https://ide.c9.io/povilasa/kmeans. 
 Unfortunately you will not be able to open this environment unless you have ```cloud9``` account. If you don't have account there you might run the code in your machine. To do that you need ```Ruby``` and testing gem ```Rspec```. You may install it with:
